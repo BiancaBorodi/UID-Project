@@ -5,6 +5,9 @@ import Home from './pages/Home';
 import PlanStudy from './pages/PlanStudy';
 import ExamEnrollment from './pages/ExamEnrollment';
 import CertificateRequest from './pages/CertificateRequest';
+import Tuition from './pages/Tuition';
+import BookAppointment from './pages/BookAppointment';
+import DormApplication from './pages/DormApplication';
 
 function App() {
     const [user, setUser] = useState(null);
@@ -36,6 +39,12 @@ function App() {
             content = <ExamEnrollment onBack={() => setCurrentPage('home')} />;
         } else if (currentPage === 'request-cert') {
             content = <CertificateRequest onBack={() => setCurrentPage('home')} />;
+        } else if (currentPage === 'tuition') {
+            content = <Tuition onBack={() => setCurrentPage('home')} />;
+        } else if (currentPage === 'appoint') {
+            content = <BookAppointment onBack={() => setCurrentPage('home')} />;
+        } else if (currentPage === 'dorm') {
+            content = <DormApplication onBack={() => setCurrentPage('home')} />;
         }
     }
 

@@ -45,6 +45,15 @@ function Home({ user, onLogout, onNavigate }) {
                                 else if (service.id === 'cert') {
                                     onNavigate('request-cert');
                                 }
+                                else if (service.id === 'tuition') {
+                                    onNavigate('tuition');
+                                }
+                                else if (service.id === 'appoint') {
+                                    onNavigate('appoint');
+                                }
+                                else if (service.id === 'dorm') {
+                                    onNavigate('dorm');
+                                }
                                 else {
                                     alert("This feature is coming soon!");
                                 }
