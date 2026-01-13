@@ -45,6 +45,15 @@ function Home({ user, onLogout, onNavigate }) {
                                 else if (service.id === 'cert') {
                                     onNavigate('request-cert');
                                 }
+                                else if (service.id === 'attend') {
+                                    onNavigate('attend-select');
+                                }
+                                else if (service.id === 'room') {
+                                    onNavigate('room-select');
+                                }
+                                else if (service.id === 'req-manage') {
+                                    onNavigate('req-manage');
+                                }
                                 else {
                                     alert("This feature is coming soon!");
                                 }
