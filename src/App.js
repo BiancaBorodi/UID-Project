@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './styles/global.css';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import PlanStudy from './pages/PlanStudy';
+import ExamEnrollment from './pages/ExamEnrollment';
+import CertificateRequest from './pages/CertificateRequest';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [user, setUser] = useState(null);
+    const [currentPage, setCurrentPage] = useState('home');
+
+    const handleLogin = (username) => {
+        setUser(username);
+        setCurrentPage('home');
+    };
+
+    const handleLogout = () => {
+        setUser(null);
+        setCurrentPage('home');
+    };
+
+    const handleNavigate = (page) => {
+        setCurrentPage(page);
+    };
+
+    let content;
+    if (!user) {
+        content = <Login onLoginSuccess={handleLogin} />;
+    } else {
+        if (currentPage === 'home') {
+            content = <Home user={user} onLogout={handleLogout} onNavigate={handleNavigate} />;
+        } else if (currentPage === 'plan-study') {
+            content = <PlanStudy onBack={() => setCurrentPage('home')} />;
+        } else if (currentPage === 'enroll-exam') {
+            content = <ExamEnrollment onBack={() => setCurrentPage('home')} />;
+        } else if (currentPage === 'request-cert') {
+            content = <CertificateRequest onBack={() => setCurrentPage('home')} />;
+        }
+    }
+
+    return (
+        <div className="App">
+            {content}
+        </div>
+    );
 }
 
 export default App;

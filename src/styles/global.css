@@ -1,0 +1,20 @@
+:root {
+    --primary-red: #D32F2F;
+    --primary-hover: #B71C1C;
+    --bg-color: #f4f4f4;
+    --card-bg: #ffffff;
+    --text-main: #000000;
+    --text-secondary: #333333;
+    --error-red: #ff0000;
+    --error-bg: #ffe6e6;
+    --border-color: #000000;
+    --success-green: rgba(59, 178, 1, 0.9);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+}
