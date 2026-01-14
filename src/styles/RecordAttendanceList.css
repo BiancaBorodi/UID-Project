@@ -29,12 +29,12 @@
 }
 
 .ral-subtitle {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-weight: 700;
 }
 
 .ral-context {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 14px;
 }
 

@@ -53,6 +53,7 @@ function Home({ user, onLogout, onNavigate }) {
                                 }
                                 else if (service.id === 'dorm') {
                                     onNavigate('dorm');
+                                }
                                 else if (service.id === 'attend') {
                                     onNavigate('attend-select');
                                 }
