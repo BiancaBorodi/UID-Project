@@ -8,10 +8,19 @@ import CertificateRequest from './pages/CertificateRequest';
 import Tuition from './pages/Tuition';
 import BookAppointment from './pages/BookAppointment';
 import DormApplication from './pages/DormApplication';
+import RecordAttendanceSelect from './pages/RecordAttendanceSelect';
+import RecordAttendanceList from './pages/RecordAttendanceList';
+import RequestRoomChangeSelect from './pages/RequestRoomChangeSelect';
+import RequestRoomChangeStatus from './pages/RequestRoomChangeStatus';
+import ManageStudentRequestsAdmin from './pages/ManageStudentRequestsAdmin';
+import ProcessCertificateRequest from './pages/ProcessCertificateRequest';
 
 function App() {
     const [user, setUser] = useState(null);
     const [currentPage, setCurrentPage] = useState('home');
+    const [selectedClass, setSelectedClass] = useState(null);
+    const [roomSelectedClass, setRoomSelectedClass] = useState(null);
+    const [selectedRequest, setSelectedRequest] = useState(null);
 
     const handleLogin = (username) => {
         setUser(username);
@@ -45,6 +54,67 @@ function App() {
             content = <BookAppointment onBack={() => setCurrentPage('home')} />;
         } else if (currentPage === 'dorm') {
             content = <DormApplication onBack={() => setCurrentPage('home')} />;
+        } else if (currentPage === 'attend-select') {
+            content = (
+                <RecordAttendanceSelect
+                    onHome={() => setCurrentPage('home')}
+                    onConfirm={(cls) => {
+                        setSelectedClass(cls);
+                        setCurrentPage('attend-list');
+                    }}
+                />
+            );
+        } else if (currentPage === 'attend-list') {
+            content = (
+                <RecordAttendanceList
+                    selectedClass={selectedClass}
+                    onHome={() => setCurrentPage('home')}
+                    onBack={() => setCurrentPage('attend-select')}
+                    onSubmit={({ selectedClass, presentIds }) => {
+                        // For now just show a confirmation. Later you can replace this with storing/sending.
+                        alert(
+                            `Attendance submitted for ${selectedClass?.name ?? 'class'}.\nPresent: ${presentIds.length} students.`
+                        );
+                        setCurrentPage('home');
+                    }}
+                />
+            );
+        } else if (currentPage === 'room-select') {
+            content = (
+                <RequestRoomChangeSelect
+                    onHome={() => setCurrentPage('home')}
+                    onConfirm={(cls) => {
+                        setRoomSelectedClass(cls);
+                        setCurrentPage('room-status');
+                    }}
+                />
+            );
+        } else if (currentPage === 'room-status') {
+            content = (
+                <RequestRoomChangeStatus
+                    selectedClass={roomSelectedClass}
+                    onHome={() => setCurrentPage('home')}
+                    onBack={() => setCurrentPage('room-select')}
+                />
+            );
+        } else if (currentPage === 'req-manage') {
+            content = (
+                <ManageStudentRequestsAdmin
+                    onHome={() => setCurrentPage('home')}
+                    onView={(req) => {
+                        setSelectedRequest(req);
+                        setCurrentPage('req-process');
+                    }}
+                />
+            );
+        } else if (currentPage === 'req-process') {
+            content = (
+                <ProcessCertificateRequest
+                    request={selectedRequest}
+                    onHome={() => setCurrentPage('home')}
+                    onBack={() => setCurrentPage('req-manage')}
+                />
+            );
         }
     }
 

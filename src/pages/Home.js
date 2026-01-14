@@ -53,6 +53,14 @@ function Home({ user, onLogout, onNavigate }) {
                                 }
                                 else if (service.id === 'dorm') {
                                     onNavigate('dorm');
+                                else if (service.id === 'attend') {
+                                    onNavigate('attend-select');
+                                }
+                                else if (service.id === 'room') {
+                                    onNavigate('room-select');
+                                }
+                                else if (service.id === 'req-manage') {
+                                    onNavigate('req-manage');
                                 }
                                 else {
                                     alert("This feature is coming soon!");
