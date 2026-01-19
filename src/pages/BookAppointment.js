@@ -7,7 +7,6 @@ function BookAppointment({ onBack }) {
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [dates, setDates] = useState([]);
 
-    // Generate the next 14 days for the calendar
     useEffect(() => {
         const tempDates = [];
         const today = new Date();
@@ -19,7 +18,6 @@ function BookAppointment({ onBack }) {
         setDates(tempDates);
     }, []);
 
-    // Standard Business Hours (09:00 to 16:00)
     const timeSlots = [
         "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
         "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
@@ -28,15 +26,13 @@ function BookAppointment({ onBack }) {
 
     const isSlotAvailable = (dateObj, timeString) => {
         const today = new Date();
-        // If the selected date is not today, all slots are open
         if (dateObj.toDateString() !== today.toDateString()) return true;
 
-        // If it IS today, check the time
         const [hours, minutes] = timeString.split(':').map(Number);
         const slotTime = new Date(today);
         slotTime.setHours(hours, minutes, 0);
 
-        return slotTime > today; // Only allow future times
+        return slotTime > today;
     };
 
     const handleConfirm = () => setIsConfirmed(true);
@@ -47,7 +43,6 @@ function BookAppointment({ onBack }) {
         return { dayName, dayNum };
     };
 
-    // --- SUCCESS VIEW ---
     if (isConfirmed) {
         return (
             <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
@@ -71,7 +66,6 @@ function BookAppointment({ onBack }) {
         );
     }
 
-    // --- SELECTION VIEW ---
     return (
         <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
             <div className="appointment-container">
@@ -92,7 +86,7 @@ function BookAppointment({ onBack }) {
                                 className={`date-card ${isSelected ? 'selected' : ''}`}
                                 onClick={() => {
                                     setSelectedDate(date);
-                                    setSelectedSlot(null); // Reset time when date changes
+                                    setSelectedSlot(null);
                                 }}
                             >
                                 <span className="day-name">{dayName}</span>
@@ -102,7 +96,7 @@ function BookAppointment({ onBack }) {
                     })}
                 </div>
 
-                {/* 2. SELECT TIME (Only visible after date is selected) */}
+                {/* 2. SELECT TIME */}
                 {selectedDate && (
                     <div className="fade-in">
                         <h4 className="section-title" style={{ marginTop: '20px' }}>
@@ -126,8 +120,6 @@ function BookAppointment({ onBack }) {
                                 );
                             })}
                         </div>
-
-                        {/* If today is selected and no slots are left */}
                         {selectedDate.toDateString() === new Date().toDateString() &&
                             timeSlots.every(t => !isSlotAvailable(selectedDate, t)) && (
                                 <p style={{color: 'red', fontSize: '0.9rem', marginTop:'10px'}}>
@@ -137,7 +129,6 @@ function BookAppointment({ onBack }) {
                     </div>
                 )}
 
-                {/* --- NAVIGATION --- */}
                 <div className="nav-buttons">
                     <button className="secondary-btn" onClick={onBack}>Cancel</button>
                     <button

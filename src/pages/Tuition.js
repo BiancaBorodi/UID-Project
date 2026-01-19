@@ -7,12 +7,10 @@ function Tuition({ onBack }) {
     return (
         <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
             <div className="tuition-container">
-                {/* --- HEADER (Consistent with other pages) --- */}
                 <div className="tuition-header">
                     <h2>Settle Tuition / Installment</h2>
                 </div>
 
-                {/* --- STATUS BANNER --- */}
                 <div className={`status-banner ${paid ? 'paid' : 'overdue'}`}>
                     <span className="status-icon">{paid ? '✓' : '!'}</span>
                     <div className="status-text">
@@ -23,7 +21,6 @@ function Tuition({ onBack }) {
                     </div>
                 </div>
 
-                {/* --- INVOICE DETAILS --- */}
                 <div className="invoice-box">
                     <div className="invoice-row">
                         <span>Semester 2 Tuition Fee</span>
@@ -44,7 +41,6 @@ function Tuition({ onBack }) {
                     </div>
                 </div>
 
-                {/* --- ACTION AREA --- */}
                 <div className="action-area">
                     {!paid ? (
                         <button
@@ -60,10 +56,9 @@ function Tuition({ onBack }) {
                     )}
                 </div>
 
-                {/* --- NAVIGATION (Consistent Bottom Bar) --- */}
                 <div className="nav-buttons">
                     <button className="secondary-btn" onClick={onBack}>
-                        Cancel
+                        Back
                     </button>
                 </div>
             </div>

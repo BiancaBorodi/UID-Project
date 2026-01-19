@@ -1,4 +1,3 @@
-/* Container consistent with UID Design System */
 .dorm-container {
     width: 100%;
     max-width: 600px;
@@ -8,7 +7,6 @@
     padding: 2.5rem;
 }
 
-/* Header style */
 .dorm-header {
     border-bottom: 2px solid var(--text-main);
     margin-bottom: 25px;
@@ -21,7 +19,6 @@
     color: var(--text-main);
 }
 
-/* Form Styles */
 .form-group {
     margin-bottom: 20px;
 }
@@ -33,7 +30,6 @@
     color: var(--text-main);
 }
 
-/* Standardizing Input/Select appearance */
 .std-input {
     width: 100%;
     padding: 10px;
@@ -50,7 +46,6 @@
     outline: none;
 }
 
-/* --- NEW UPLOAD BOX STYLES (Matches CertificateRequest) --- */
 .upload-box {
     border: 2px dashed var(--text-main);
     padding: 20px;
@@ -65,14 +60,11 @@
 .upload-box:hover {
     background: #eee;
 }
-/* --------------------------------------------------------- */
 
-/* Success Message Area */
 .success-message {
     padding: 20px 0;
 }
 
-/* --- NAVIGATION BUTTONS (Scoped) --- */
 .dorm-container .nav-buttons {
     display: flex;
     justify-content: space-between;
@@ -98,7 +90,6 @@
     opacity: 0.9;
 }
 
-/* Disabled state for Submit button */
 .dorm-container .primary-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;

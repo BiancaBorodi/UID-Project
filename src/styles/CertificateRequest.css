@@ -153,3 +153,31 @@
     justify-content: space-between;
     margin-top: 30px;
 }
+
+.cert-container .primary-btn,
+.cert-container .secondary-btn {
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid var(--text-main);
+}
+
+.cert-container .primary-btn {
+    background-color: var(--primary-red);
+    color: white;
+}
+
+.cert-container .primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.cert-container .secondary-btn {
+    background-color: white;
+    color: var(--text-main);
+}
+
+.cert-container .secondary-btn:hover {
+    background-color: var(--text-main);
+    color: white;
+}

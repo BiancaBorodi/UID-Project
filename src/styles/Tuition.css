@@ -1,14 +1,12 @@
-/* Container matching PlanStudy and others */
 .tuition-container {
     width: 100%;
-    max-width: 600px; /* Slightly narrower for a payment form looks better */
+    max-width: 600px;
     margin: auto;
     background-color: var(--card-bg);
     border: 2px solid var(--text-main);
     padding: 2.5rem;
 }
 
-/* Header matching styles */
 .tuition-header {
     border-bottom: 2px solid var(--text-main);
     margin-bottom: 20px;
@@ -21,7 +19,6 @@
     color: var(--text-main);
 }
 
-/* Status Banner */
 .status-banner {
     display: flex;
     align-items: center;
@@ -34,7 +31,7 @@
 .status-banner.overdue {
     background-color: #fff5f5;
     border-color: #f5c6cb;
-    border-left-color: var(--error-red); /* Uses global red if available, or #dc3545 */
+    border-left-color: var(--error-red);
     color: #721c24;
 }
 
@@ -51,7 +48,6 @@
     font-weight: bold;
 }
 
-/* Invoice Box Styles */
 .invoice-box {
     border: 2px solid #eee;
     padding: 20px;
@@ -92,7 +88,6 @@
     font-size: 1.4rem;
 }
 
-/* Action Area */
 .action-area {
     margin-bottom: 30px;
     text-align: center;
@@ -112,10 +107,9 @@
     font-weight: bold;
 }
 
-/* Navigation Buttons (Global consistency) */
 .tuition-container .nav-buttons {
     display: flex;
-    justify-content: flex-start; /* Aligns Home to the left */
+    justify-content: flex-start;
     margin-top: 20px;
 }
 

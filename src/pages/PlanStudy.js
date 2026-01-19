@@ -289,11 +289,9 @@ function PlanStudy({ onBack }) {
     return (
         <div style={{padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center'}}>
             <div className="plan-container">
-                {/* --- NEW HEADER START --- */}
                 <div className="plan-header">
                     <h2>Plan Your Study</h2>
                 </div>
-                {/* --- NEW HEADER END --- */}
 
                 {step < 4 && (
                     <div className="progress-bar">

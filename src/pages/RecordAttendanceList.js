@@ -29,32 +29,23 @@ function RecordAttendanceList({ selectedClass, onHome, onSubmit, onBack }) {
   };
 
   const handleSubmit = () => {
-    // 1. Immediately show the success screen
     setIsSubmitted(true);
-
-    // NOTE: We calculated 'presentIds' here before, but since we aren't sending
-    // it to a real backend right now, I removed it to stop the warning.
-
-    // If you need to debug the data, you can uncomment this:
-    /*
-    const presentIds = Object.entries(present)
-      .filter(([, isPresent]) => isPresent)
-      .map(([id]) => id);
-    console.log("Submitting:", presentIds);
-    */
-
     if (onSubmit) {
-      // onSubmit({ selectedClass, presentIds });
     }
   };
 
-  // --- SUCCESS VIEW ---
   if (isSubmitted) {
     return (
         <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
           <div className="attendance-container" style={{ textAlign: 'center' }}>
             <div className="attendance-header">
               <h2>Attendance Saved</h2>
+            </div>
+
+            <div className="progress-bar">
+              <span className="step-indicator">1. Select Class</span>
+              <span className="step-indicator">2. Mark Attendance</span>
+              <span className="step-indicator active">3. Confirm</span>
             </div>
 
             <div className="success-message">
@@ -81,16 +72,19 @@ function RecordAttendanceList({ selectedClass, onHome, onSubmit, onBack }) {
     );
   }
 
-  // --- MAIN LIST VIEW ---
   return (
       <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
         <div className="attendance-container">
-          {/* --- HEADER --- */}
           <div className="attendance-header">
             <h2>Record Attendance</h2>
           </div>
 
-          {/* --- CONTEXT INFO --- */}
+          <div className="progress-bar">
+            <span className="step-indicator">1. Select Class</span>
+            <span className="step-indicator active">2. Mark Attendance</span>
+            <span className="step-indicator">3. Confirm</span>
+          </div>
+
           <div className="context-box">
             <h4 style={{margin:0, color: 'var(--text-main)'}}>
               {selectedClass ? `${selectedClass.name} (${selectedClass.type})` : 'Class'}
@@ -100,9 +94,8 @@ function RecordAttendanceList({ selectedClass, onHome, onSubmit, onBack }) {
             </p>
           </div>
 
-          <h4 className="section-title">2. Mark Present Students</h4>
+          <h4 className="section-title">Mark Present Students</h4>
 
-          {/* --- LIST TABLE --- */}
           <table className="attendance-table">
             <thead>
             <tr>
@@ -133,7 +126,6 @@ function RecordAttendanceList({ selectedClass, onHome, onSubmit, onBack }) {
             </tbody>
           </table>
 
-          {/* --- NAVIGATION --- */}
           <div className="nav-buttons">
             <button className="secondary-btn" onClick={onBack}>
               Back

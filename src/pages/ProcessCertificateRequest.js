@@ -2,19 +2,14 @@ import React, { useState } from 'react';
 import '../styles/ManageStudentRequests.css';
 
 function ProcessCertificateRequest({ request, onHome, onBack }) {
-  const [uploadedName, setUploadedName] = useState('');
+  const [fileAttached, setFileAttached] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleUploadMock = () => {
-    // Mock upload action
-    setUploadedName('certificate_generated.pdf');
-  };
 
   const handleApproveSend = () => {
     setIsSuccess(true);
   };
 
-  // --- SUCCESS VIEW (Standard Green Check) ---
+  // --- SUCCESS VIEW ---
   if (isSuccess) {
     return (
         <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
@@ -45,12 +40,15 @@ function ProcessCertificateRequest({ request, onHome, onBack }) {
   return (
       <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
         <div className="request-container">
-          {/* --- HEADER --- */}
           <div className="request-header">
             <h2>Process Certificate Request</h2>
           </div>
 
-          {/* --- DETAILS GRID --- */}
+          <div className="progress-bar">
+            <span className="step-indicator">1. Pending Requests</span>
+            <span className="step-indicator active">2. Process Request</span>
+          </div>
+
           <div className="details-grid">
             <div className="detail-row">
               <span className="label">Student:</span>
@@ -85,26 +83,26 @@ function ProcessCertificateRequest({ request, onHome, onBack }) {
 
           <hr style={{margin: '20px 0', border: '0', borderTop: '1px solid #eee'}} />
 
-          {/* --- UPLOAD SECTION --- */}
           <div className="action-section">
             <h4 className="section-title">Action Required</h4>
             <p style={{marginBottom: '10px', fontSize:'0.9rem'}}>Please upload the generated certificate PDF.</p>
 
-            <div className="upload-area">
-              {uploadedName ? (
-                  <div className="file-attached">
-                    <span style={{color:'green', fontWeight:'bold'}}>✓ Ready to Send:</span> {uploadedName}
-                    <button className="text-btn" onClick={() => setUploadedName('')}>Remove</button>
-                  </div>
-              ) : (
-                  <button className="secondary-btn small" onClick={handleUploadMock}>
-                    + Upload Certificate
-                  </button>
-              )}
+            <div
+                className="upload-box"
+                onClick={() => setFileAttached(!fileAttached)}
+                style={{
+                  borderColor: fileAttached ? 'var(--success-green)' : 'var(--text-main)',
+                  backgroundColor: fileAttached ? '#e8f5e9' : '#f9f9f9',
+                  color: fileAttached ? 'var(--success-green)' : 'var(--text-main)'
+                }}
+            >
+              {fileAttached
+                  ? <span>✓ Certificate PDF Attached</span>
+                  : <span>+ Click here to upload generated PDF</span>
+              }
             </div>
           </div>
 
-          {/* --- NAVIGATION --- */}
           <div className="nav-buttons">
             <button className="secondary-btn" onClick={onBack}>
               Back
@@ -113,7 +111,7 @@ function ProcessCertificateRequest({ request, onHome, onBack }) {
             <button
                 className="primary-btn"
                 onClick={handleApproveSend}
-                disabled={!uploadedName}
+                disabled={!fileAttached}
             >
               Approve & Send
             </button>

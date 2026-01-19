@@ -3,10 +3,8 @@ import '../styles/DormApplication.css';
 
 function DormApplication({ onBack }) {
     const [submitted, setSubmitted] = useState(false);
-    // New state for the custom upload box
     const [fileAttached, setFileAttached] = useState(false);
 
-    // --- SUCCESS VIEW ---
     if (submitted) {
         return (
             <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
@@ -34,7 +32,6 @@ function DormApplication({ onBack }) {
         );
     }
 
-    // --- MAIN FORM VIEW ---
     return (
         <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
             <div className="dorm-container">
@@ -61,7 +58,6 @@ function DormApplication({ onBack }) {
                         </select>
                     </div>
 
-                    {/* --- UPDATED UPLOAD SECTION --- */}
                     <div className="form-group">
                         <label style={{color: 'var(--primary-red)'}}>Income Statement (PDF) *</label>
                         <p style={{fontSize:'0.9rem', marginBottom:'10px', color:'#555'}}>
@@ -83,11 +79,9 @@ function DormApplication({ onBack }) {
                         </div>
                         {!fileAttached && <div style={{color:'red', fontSize:'0.8rem', marginTop:'5px'}}>* Required</div>}
                     </div>
-                    {/* ----------------------------- */}
 
                 </div>
 
-                {/* --- NAVIGATION --- */}
                 <div className="nav-buttons">
                     <button className="secondary-btn" onClick={onBack}>
                         Cancel
@@ -96,7 +90,7 @@ function DormApplication({ onBack }) {
                     <button
                         className="primary-btn"
                         onClick={() => setSubmitted(true)}
-                        disabled={!fileAttached} // Prevent submit if file is missing
+                        disabled={!fileAttached}
                     >
                         Submit Application
                     </button>

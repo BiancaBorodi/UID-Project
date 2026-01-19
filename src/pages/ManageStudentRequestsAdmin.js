@@ -59,14 +59,17 @@ function ManageStudentRequestsAdmin({ onHome, onView }) {
   return (
       <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
         <div className="request-container">
-          {/* --- HEADER --- */}
           <div className="request-header">
             <h2>Manage Student Requests</h2>
           </div>
 
-          <h4 className="section-title">Pending Requests</h4>
+          <div className="progress-bar">
+            <span className="step-indicator active">1. Pending Requests</span>
+            <span className="step-indicator">2. Process Request</span>
+          </div>
 
-          {/* --- TABLE --- */}
+          <h4 className="section-title">Pending List</h4>
+
           <table className="request-table">
             <thead>
             <tr>
@@ -95,10 +98,9 @@ function ManageStudentRequestsAdmin({ onHome, onView }) {
             </tbody>
           </table>
 
-          {/* --- NAVIGATION --- */}
           <div className="nav-buttons">
             <button className="secondary-btn" onClick={onHome}>
-              Cancel
+              Home
             </button>
 
             <button

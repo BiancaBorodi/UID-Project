@@ -41,7 +41,7 @@ function ExamEnrollment({ onBack }) {
     const confirmEnrollment = () => {
         setEnrollments({
             ...enrollments,
-            [selectedCourseId]: `${pendingSession.date} at ${pendingSession.time}`
+            [selectedCourseId]: pendingSession.id
         });
         setShowModal(false);
         setPendingSession(null);
@@ -83,7 +83,12 @@ function ExamEnrollment({ onBack }) {
                             </td>
                             <td>
                                 {isEnrolled ? (
-                                    <button className="action-btn" disabled>View</button>
+                                    <button
+                                        className="action-btn"
+                                        onClick={() => handleChooseCourse(course.id)}
+                                    >
+                                        View
+                                    </button>
                                 ) : (
                                     <button
                                         className={`action-btn ${!course.eligible ? 'disabled' : ''}`}
@@ -106,11 +111,10 @@ function ExamEnrollment({ onBack }) {
     const renderSessionList = () => {
         const course = COURSES.find(c => c.id === selectedCourseId);
         const sessions = SESSIONS[selectedCourseId] || [];
+        const enrolledSessionId = enrollments[selectedCourseId];
 
         return (
             <div>
-                {/* REMOVED: The top "Back to Courses" button to match PlanStudy layout */}
-
                 <h3>Select Session for: <span style={{color:'var(--primary-red)'}}>{course.name}</span></h3>
 
                 <table className="exam-table">
@@ -124,28 +128,39 @@ function ExamEnrollment({ onBack }) {
                     </tr>
                     </thead>
                     <tbody>
-                    {sessions.map(session => (
-                        <tr key={session.id}>
-                            <td>{session.date}</td>
-                            <td>{session.time}</td>
-                            <td>{session.room}</td>
-                            <td>
-                                {session.status === 'Available'
-                                    ? <span style={{color:'green', fontWeight:'bold'}}>Available</span>
-                                    : <span style={{color:'red', fontWeight:'bold'}}>Full</span>
-                                }
-                            </td>
-                            <td>
-                                <button
-                                    className={`action-btn ${session.status === 'Full' ? 'full' : ''}`}
-                                    disabled={session.status === 'Full'}
-                                    onClick={() => handleEnrollClick(session)}
-                                >
-                                    {session.status === 'Full' ? 'Closed' : 'Enroll'}
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                    {sessions.map(session => {
+                        const isThisSession = enrolledSessionId === session.id;
+                        const isEnrolledInAny = !!enrolledSessionId;
+
+                        return (
+                            <tr key={session.id} className={isThisSession ? "enrolled-row" : ""}>
+                                <td>{session.date}</td>
+                                <td>{session.time}</td>
+                                <td>{session.room}</td>
+                                <td>
+                                    {session.status === 'Available'
+                                        ? <span style={{color:'green', fontWeight:'bold'}}>Available</span>
+                                        : <span style={{color:'red', fontWeight:'bold'}}>Full</span>
+                                    }
+                                </td>
+                                <td>
+                                    {isThisSession ? (
+                                        <button className="action-btn enrolled" disabled>
+                                            ✓ Enrolled
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className={`action-btn ${session.status === 'Full' ? 'full' : ''}`}
+                                            disabled={session.status === 'Full' || isEnrolledInAny}
+                                            onClick={() => handleEnrollClick(session)}
+                                        >
+                                            {session.status === 'Full' ? 'Closed' : 'Enroll'}
+                                        </button>
+                                    )}
+                                </td>
+                            </tr>
+                        );
+                    })}
                     </tbody>
                 </table>
             </div>
@@ -161,24 +176,17 @@ function ExamEnrollment({ onBack }) {
 
                 {selectedCourseId ? renderSessionList() : renderCourseList()}
 
-                {/* --- NEW NAVIGATION BAR (Matches PlanStudy) --- */}
                 <div className="nav-buttons">
                     {selectedCourseId ? (
-                        // If inside a course (Level 2), Back button goes to Course List
                         <button className="secondary-btn" onClick={() => setSelectedCourseId(null)}>
                             Back
                         </button>
                     ) : (
-                        // If at top level (Level 1), Back button goes Home (onBack prop)
                         <button className="secondary-btn" onClick={onBack}>
-                            Cancel
+                            Back
                         </button>
                     )}
-
-                    {/* Note: There is no global "Next" button here because the action
-                        is taken inside the table rows ('Choose' or 'Enroll') */}
                 </div>
-                {/* ----------------------------------------------- */}
 
                 {showModal && (
                     <div className="modal-overlay">

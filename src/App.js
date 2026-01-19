@@ -17,18 +17,21 @@ import ProcessCertificateRequest from './pages/ProcessCertificateRequest';
 
 function App() {
     const [user, setUser] = useState(null);
+    const [role, setRole] = useState(null);
     const [currentPage, setCurrentPage] = useState('home');
     const [selectedClass, setSelectedClass] = useState(null);
     const [roomSelectedClass, setRoomSelectedClass] = useState(null);
     const [selectedRequest, setSelectedRequest] = useState(null);
 
-    const handleLogin = (username) => {
+    const handleLogin = (username, role) => {
         setUser(username);
+        setRole(role);
         setCurrentPage('home');
     };
 
     const handleLogout = () => {
         setUser(null);
+        setRole(null);
         setCurrentPage('home');
     };
 
@@ -41,7 +44,7 @@ function App() {
         content = <Login onLoginSuccess={handleLogin} />;
     } else {
         if (currentPage === 'home') {
-            content = <Home user={user} onLogout={handleLogout} onNavigate={handleNavigate} />;
+            content = <Home user={user} role={role} onLogout={handleLogout} onNavigate={handleNavigate} />;
         } else if (currentPage === 'plan-study') {
             content = <PlanStudy onBack={() => setCurrentPage('home')} />;
         } else if (currentPage === 'enroll-exam') {
@@ -71,7 +74,6 @@ function App() {
                     onHome={() => setCurrentPage('home')}
                     onBack={() => setCurrentPage('attend-select')}
                     onSubmit={({ selectedClass, presentIds }) => {
-                        // For now just show a confirmation. Later you can replace this with storing/sending.
                         alert(
                             `Attendance submitted for ${selectedClass?.name ?? 'class'}.\nPresent: ${presentIds.length} students.`
                         );

@@ -32,10 +32,12 @@ function Login({ onLoginSuccess }) {
             return;
         }
 
-        if (username === "username" && password === "password") {
-            onLoginSuccess(username);
+        if (username === "student" && password === "password") {
+            onLoginSuccess(username, "student");
+        } else if (username === "teacher" && password === "password") {
+            onLoginSuccess(username, "teacher");
         } else {
-            setErrors({ ...newErrors, general: "Error with the username or password." });
+            setErrors({ ...newErrors, general: "Invalid username or password." });
         }
     };
 

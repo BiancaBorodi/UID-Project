@@ -1,14 +1,12 @@
-/* Container consistent with other pages */
 .appointment-container {
     width: 100%;
-    max-width: 700px; /* Slightly wider to fit the calendar grid nicely */
+    max-width: 700px;
     margin: auto;
     background-color: var(--card-bg);
     border: 2px solid var(--text-main);
     padding: 2.5rem;
 }
 
-/* Header style */
 .appointment-header {
     border-bottom: 2px solid var(--text-main);
     margin-bottom: 20px;
@@ -29,12 +27,11 @@
     font-weight: bold;
 }
 
-/* --- DATE PICKER GRID --- */
 .calendar-grid {
     display: flex;
     gap: 10px;
-    overflow-x: auto; /* Allows scrolling if screen is small */
-    padding-bottom: 10px; /* Space for scrollbar */
+    overflow-x: auto;
+    padding-bottom: 10px;
 }
 
 .date-card {
@@ -73,7 +70,6 @@
     font-weight: bold;
 }
 
-/* --- TIME SLOT GRID --- */
 .time-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -97,7 +93,7 @@
 }
 
 .time-chip.selected {
-    background-color: var(--primary-red); /* Using the global red theme */
+    background-color: var(--primary-red);
     color: white;
     border-color: var(--primary-red);
 }
@@ -109,7 +105,6 @@
     text-decoration: line-through;
 }
 
-/* Animation for smoother UI */
 .fade-in {
     animation: fadeIn 0.3s ease-in;
 }
@@ -119,7 +114,6 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- NAVIGATION BUTTONS (Scoped) --- */
 .appointment-container .nav-buttons {
     display: flex;
     justify-content: space-between;
