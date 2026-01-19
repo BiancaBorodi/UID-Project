@@ -1,48 +1,152 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import '../styles/BookAppointment.css';
 
 function BookAppointment({ onBack }) {
-    const [booked, setBooked] = useState(null);
-    const slots = ["09:00 - 09:30", "10:30 - 11:00", "14:00 - 14:30", "15:30 - 16:00"];
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedSlot, setSelectedSlot] = useState(null);
+    const [isConfirmed, setIsConfirmed] = useState(false);
+    const [dates, setDates] = useState([]);
 
+    // Generate the next 14 days for the calendar
+    useEffect(() => {
+        const tempDates = [];
+        const today = new Date();
+        for (let i = 0; i < 14; i++) {
+            const d = new Date(today);
+            d.setDate(today.getDate() + i);
+            tempDates.push(d);
+        }
+        setDates(tempDates);
+    }, []);
+
+    // Standard Business Hours (09:00 to 16:00)
+    const timeSlots = [
+        "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+        "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+        "15:00", "15:30", "16:00"
+    ];
+
+    const isSlotAvailable = (dateObj, timeString) => {
+        const today = new Date();
+        // If the selected date is not today, all slots are open
+        if (dateObj.toDateString() !== today.toDateString()) return true;
+
+        // If it IS today, check the time
+        const [hours, minutes] = timeString.split(':').map(Number);
+        const slotTime = new Date(today);
+        slotTime.setHours(hours, minutes, 0);
+
+        return slotTime > today; // Only allow future times
+    };
+
+    const handleConfirm = () => setIsConfirmed(true);
+
+    const formatDateDisplay = (date) => {
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+        const dayNum = date.getDate();
+        return { dayName, dayNum };
+    };
+
+    // --- SUCCESS VIEW ---
+    if (isConfirmed) {
+        return (
+            <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+                <div className="appointment-container" style={{ textAlign: 'center' }}>
+                    <div className="appointment-header">
+                        <h2>Appointment Confirmed</h2>
+                    </div>
+                    <div className="success-message">
+                        <div style={{ fontSize: '4rem', color: 'green', marginBottom: '10px' }}>✓</div>
+                        <p>Your appointment is scheduled for:</p>
+                        <h3 style={{ color: 'var(--text-main)', marginTop: '5px' }}>
+                            {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                        </h3>
+                        <h2 style={{ color: 'var(--primary-red)' }}>{selectedSlot}</h2>
+                    </div>
+                    <div className="nav-buttons" style={{ justifyContent: 'center' }}>
+                        <button className="primary-btn" onClick={onBack}>Return Home</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // --- SELECTION VIEW ---
     return (
-        <div style={{ padding: '40px 20px', minHeight: '100vh' }}>
-            <div className="dashboard-wrapper">
-                <header className="dashboard-header">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                        <button onClick={onBack} className="logout-btn" style={{backgroundColor: '#6c757d'}}>← Back</button>
-                        <h1>Book Secretariat Appointment</h1>
-                    </div>
-                </header>
+        <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+            <div className="appointment-container">
+                <div className="appointment-header">
+                    <h2>Book Secretariat Appointment</h2>
+                </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '20px' }}>
-                    <div style={{ background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-                        <h3 style={{ marginBottom: '15px' }}>Available Slots: Tomorrow</h3>
-                        {slots.map((slot) => (
-                            <div key={slot} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', borderBottom: '1px solid #eee' }}>
-                                <span>{slot}</span>
-                                <button 
-                                    onClick={() => setBooked(slot)}
-                                    style={{ padding: '5px 15px', borderRadius: '5px', border: 'none', background: '#003366', color: 'white', cursor: 'pointer' }}
-                                >
-                                    Select
-                                </button>
-                            </div>
-                        ))}
-                    </div>
+                {/* 1. SELECT DATE */}
+                <h4 className="section-title">1. Select Date</h4>
+                <div className="calendar-grid">
+                    {dates.map((date, index) => {
+                        const { dayName, dayNum } = formatDateDisplay(date);
+                        const isSelected = selectedDate && selectedDate.toDateString() === date.toDateString();
 
-                    {booked && (
-                        <div style={{ background: '#e7f3ff', padding: '20px', borderRadius: '12px', border: '2px dashed #003366', textAlign: 'center' }}>
-                            <h3 style={{ color: '#003366' }}>Confirm Booking</h3>
-                            <p>You have selected: <strong>{booked}</strong></p>
-                            <button 
-                                onClick={() => { alert("Appointment Confirmed!"); setBooked(null); }}
-                                className="menu-tile"
-                                style={{ width: '100%', marginTop: '20px', border: 'none' }}
+                        return (
+                            <div
+                                key={index}
+                                className={`date-card ${isSelected ? 'selected' : ''}`}
+                                onClick={() => {
+                                    setSelectedDate(date);
+                                    setSelectedSlot(null); // Reset time when date changes
+                                }}
                             >
-                                Confirm Appointment
-                            </button>
+                                <span className="day-name">{dayName}</span>
+                                <span className="day-num">{dayNum}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                {/* 2. SELECT TIME (Only visible after date is selected) */}
+                {selectedDate && (
+                    <div className="fade-in">
+                        <h4 className="section-title" style={{ marginTop: '20px' }}>
+                            2. Select Time <span style={{fontWeight:'normal', fontSize:'0.9rem'}}>for {selectedDate.toLocaleDateString()}</span>
+                        </h4>
+
+                        <div className="time-grid">
+                            {timeSlots.map((time) => {
+                                const available = isSlotAvailable(selectedDate, time);
+                                const isSelected = selectedSlot === time;
+
+                                return (
+                                    <button
+                                        key={time}
+                                        className={`time-chip ${isSelected ? 'selected' : ''}`}
+                                        disabled={!available}
+                                        onClick={() => setSelectedSlot(time)}
+                                    >
+                                        {time}
+                                    </button>
+                                );
+                            })}
                         </div>
-                    )}
+
+                        {/* If today is selected and no slots are left */}
+                        {selectedDate.toDateString() === new Date().toDateString() &&
+                            timeSlots.every(t => !isSlotAvailable(selectedDate, t)) && (
+                                <p style={{color: 'red', fontSize: '0.9rem', marginTop:'10px'}}>
+                                    No more slots available for today. Please choose another date.
+                                </p>
+                            )}
+                    </div>
+                )}
+
+                {/* --- NAVIGATION --- */}
+                <div className="nav-buttons">
+                    <button className="secondary-btn" onClick={onBack}>Cancel</button>
+                    <button
+                        className="primary-btn"
+                        disabled={!selectedDate || !selectedSlot}
+                        onClick={handleConfirm}
+                    >
+                        Confirm Booking
+                    </button>
                 </div>
             </div>
         </div>

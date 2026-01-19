@@ -7,11 +7,25 @@
     padding: 2rem;
 }
 
+/* --- NEW HEADER STYLES --- */
+.plan-header {
+    border-bottom: 2px solid var(--text-main);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.plan-header h2 {
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+/* ------------------------ */
+
 .progress-bar {
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
-    border-bottom: 2px solid #eee;
+    /* border-bottom: 2px solid #eee;  <-- REMOVED to match other pages */
     padding-bottom: 10px;
 }
 
@@ -171,7 +185,7 @@
     border-left: 5px solid var(--text-main);
 }
 
-.nav-buttons {
+.plan-container .nav-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 2rem;

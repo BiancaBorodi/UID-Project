@@ -1,58 +1,106 @@
 import React, { useState } from 'react';
+import '../styles/DormApplication.css';
 
 function DormApplication({ onBack }) {
     const [submitted, setSubmitted] = useState(false);
+    // New state for the custom upload box
+    const [fileAttached, setFileAttached] = useState(false);
 
+    // --- SUCCESS VIEW ---
+    if (submitted) {
+        return (
+            <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+                <div className="dorm-container" style={{ textAlign: 'center' }}>
+                    <div className="dorm-header">
+                        <h2>Application Submitted</h2>
+                    </div>
+
+                    <div className="success-message">
+                        <div style={{ fontSize: '4rem', color: 'green', marginBottom: '10px' }}>✓</div>
+                        <h3 style={{ color: 'var(--text-main)', marginTop: '5px' }}>Received Successfully</h3>
+                        <p style={{ marginTop: '20px', color: '#666' }}>
+                            Your application for the 2025/2026 academic year is now under review.
+                        </p>
+                        <p style={{ fontSize: '0.9rem', color: '#666' }}>
+                            You will be notified of the allocation result via email.
+                        </p>
+                    </div>
+
+                    <div className="nav-buttons" style={{ justifyContent: 'center' }}>
+                        <button className="primary-btn" onClick={onBack}>Return to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // --- MAIN FORM VIEW ---
     return (
-        <div style={{ padding: '40px 20px', minHeight: '100vh' }}>
-            <div className="dashboard-wrapper">
-                <header className="dashboard-header">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                        <button onClick={onBack} className="logout-btn" style={{backgroundColor: '#6c757d'}}>← Back</button>
-                        <h1>Dormitory Application</h1>
+        <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+            <div className="dorm-container">
+                <div className="dorm-header">
+                    <h2>Dormitory Application</h2>
+                </div>
+
+                <div className="dorm-form">
+                    <div className="form-group">
+                        <label>Room Type Preference</label>
+                        <select className="std-input">
+                            <option>Single Room (Private Bath)</option>
+                            <option>Double Room (Shared Bath)</option>
+                            <option>Quad Suite</option>
+                        </select>
                     </div>
-                </header>
 
-                {!submitted ? (
-                    <form style={{ background: 'white', padding: '30px', borderRadius: '12px', marginTop: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-                        <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Room Type Preference</label>
-                            <select style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}>
-                                <option>Single Room (Private Bath)</option>
-                                <option>Double Room (Shared Bath)</option>
-                                <option>Quad Suite</option>
-                            </select>
-                        </div>
+                    <div className="form-group">
+                        <label>Building Preference</label>
+                        <select className="std-input">
+                            <option>Main Campus Hall</option>
+                            <option>West Side Residency</option>
+                            <option>International Student House</option>
+                        </select>
+                    </div>
 
-                        <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Building Preference</label>
-                            <select style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}>
-                                <option>Main Campus Hall</option>
-                                <option>West Side Residency</option>
-                                <option>International Student House</option>
-                            </select>
-                        </div>
+                    {/* --- UPDATED UPLOAD SECTION --- */}
+                    <div className="form-group">
+                        <label style={{color: 'var(--primary-red)'}}>Income Statement (PDF) *</label>
+                        <p style={{fontSize:'0.9rem', marginBottom:'10px', color:'#555'}}>
+                            Please upload a scan of your <strong>Income Statement</strong> for financial aid consideration.
+                        </p>
 
-                        <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Upload Income Statement (PDF)</label>
-                            <input type="file" style={{ width: '100%', padding: '10px', border: '1px dashed #ccc' }} />
-                        </div>
-
-                        <button 
-                            type="button"
-                            onClick={() => setSubmitted(true)}
-                            className="menu-tile"
-                            style={{ width: '100%', border: 'none', cursor: 'pointer' }}
+                        <div
+                            className="upload-box"
+                            onClick={() => setFileAttached(!fileAttached)}
+                            style={{
+                                borderColor: fileAttached ? 'var(--success-green)' : 'var(--text-main)',
+                                backgroundColor: fileAttached ? '#e8f5e9' : '#f9f9f9'
+                            }}
                         >
-                            Submit Application
-                        </button>
-                    </form>
-                ) : (
-                    <div style={{ background: '#d4edda', padding: '40px', borderRadius: '12px', textAlign: 'center', marginTop: '20px' }}>
-                        <h2 style={{ color: '#155724' }}>✓ Application Submitted</h2>
-                        <p>Your application for the 2025/2026 academic year has been received. You will be notified of the result via email.</p>
+                            {fileAttached
+                                ? <span style={{color:'green', fontWeight:'bold'}}>✓ File Attached</span>
+                                : <span>+ Click here to upload PDF</span>
+                            }
+                        </div>
+                        {!fileAttached && <div style={{color:'red', fontSize:'0.8rem', marginTop:'5px'}}>* Required</div>}
                     </div>
-                )}
+                    {/* ----------------------------- */}
+
+                </div>
+
+                {/* --- NAVIGATION --- */}
+                <div className="nav-buttons">
+                    <button className="secondary-btn" onClick={onBack}>
+                        Cancel
+                    </button>
+
+                    <button
+                        className="primary-btn"
+                        onClick={() => setSubmitted(true)}
+                        disabled={!fileAttached} // Prevent submit if file is missing
+                    >
+                        Submit Application
+                    </button>
+                </div>
             </div>
         </div>
     );

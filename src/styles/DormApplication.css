@@ -1,0 +1,117 @@
+/* Container consistent with UID Design System */
+.dorm-container {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    background-color: var(--card-bg);
+    border: 2px solid var(--text-main);
+    padding: 2.5rem;
+}
+
+/* Header style */
+.dorm-header {
+    border-bottom: 2px solid var(--text-main);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+
+.dorm-header h2 {
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+/* Standardizing Input/Select appearance */
+.std-input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: white;
+    cursor: pointer;
+}
+
+.std-input:focus {
+    border-color: var(--text-main);
+    outline: none;
+}
+
+/* --- NEW UPLOAD BOX STYLES (Matches CertificateRequest) --- */
+.upload-box {
+    border: 2px dashed var(--text-main);
+    padding: 20px;
+    text-align: center;
+    background: #f9f9f9;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.upload-box:hover {
+    background: #eee;
+}
+/* --------------------------------------------------------- */
+
+/* Success Message Area */
+.success-message {
+    padding: 20px 0;
+}
+
+/* --- NAVIGATION BUTTONS (Scoped) --- */
+.dorm-container .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.dorm-container .primary-btn,
+.dorm-container .secondary-btn {
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid var(--text-main);
+}
+
+.dorm-container .primary-btn {
+    background-color: var(--primary-red);
+    color: white;
+}
+
+.dorm-container .primary-btn:hover {
+    opacity: 0.9;
+}
+
+/* Disabled state for Submit button */
+.dorm-container .primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #ccc;
+    border-color: #ccc;
+}
+
+.dorm-container .secondary-btn {
+    background-color: white;
+    color: var(--text-main);
+}
+
+.dorm-container .secondary-btn:hover {
+    background-color: var(--text-main);
+    color: white;
+}

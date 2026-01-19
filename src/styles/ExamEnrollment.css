@@ -68,6 +68,7 @@
     color: white;
 }
 
+/* Action button inside table rows */
 .action-btn {
     padding: 8px 15px;
     cursor: pointer;
@@ -96,6 +97,35 @@
     cursor: not-allowed;
     background-color: var(--error-bg);
 }
+
+/* --- NAVIGATION BUTTONS (Matching PlanStudy) --- */
+.exam-container .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.exam-container .primary-btn, .secondary-btn {
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid var(--text-main);
+}
+
+.exam-container .primary-btn {
+    background-color: var(--primary-red);
+    color: white;
+}
+
+.exam-container .secondary-btn {
+    background-color: white;
+    color: var(--text-main);
+}
+
+.secondary-btn:hover {
+    background-color: #f0f0f0;
+}
+/* --------------------------------------------- */
 
 .modal-overlay {
     position: fixed;

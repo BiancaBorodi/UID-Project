@@ -1,64 +1,73 @@
 import React from 'react';
-import '../styles/RequestRoomChangeStatus.css';
+import '../styles/RequestRoomChange.css';
 
 function RequestRoomChangeStatus({ selectedClass, onHome, onBack }) {
   return (
-    <div className="rrcst-page">
-      <div className="rrcst-wrapper">
-        <header className="rrcst-topbar">
-          <div className="rrcst-title-wrap">
-            <h1 className="rrcst-title">Request room change</h1>
-            <div className="rrcst-subtitle">Request sent!</div>
+      <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+        <div className="room-container">
+          {/* --- HEADER --- */}
+          <div className="room-header">
+            <h2>Request Room Change</h2>
           </div>
 
-          <div className="rrcst-top-actions">
-            <button className="rrcst-secondary-btn" onClick={onBack}>
+          {/* --- CONTEXT INFO --- */}
+          <div className="context-box">
+            <h4 style={{margin:0, color: 'var(--text-main)'}}>
+              {selectedClass ? selectedClass.name : 'Class'}
+            </h4>
+            <p style={{margin:0, fontSize:'0.9rem', color:'#666'}}>
+              {selectedClass?.type} — Current: <strong>{selectedClass?.room}</strong>
+            </p>
+          </div>
+
+          <div className="status-section">
+            <h4 className="section-title">Request Status</h4>
+
+            <div className="timeline">
+              {/* Step 1: Submitted (Active) */}
+              <div className="timeline-item active">
+                <div className="timeline-icon">✓</div>
+                <div className="timeline-content">
+                  <strong>Submitted</strong>
+                  <p>Request received by administration.</p>
+                </div>
+              </div>
+
+              {/* Step 2: In Review */}
+              <div className="timeline-item">
+                <div className="timeline-icon">•</div>
+                <div className="timeline-content">
+                  <strong>Reviewed</strong>
+                  <p>Pending approval from Facility Manager.</p>
+                </div>
+              </div>
+
+              {/* Step 3: Decision */}
+              <div className="timeline-item">
+                <div className="timeline-icon">•</div>
+                <div className="timeline-content">
+                  <strong>Approved / Rejected</strong>
+                  <p>Final decision notification.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="info-note">
+            <p>An email has been sent with a tracking link for this request.</p>
+          </div>
+
+          {/* --- NAVIGATION --- */}
+          <div className="nav-buttons">
+            <button className="secondary-btn" onClick={onBack}>
               Back
             </button>
-            <button className="rrcst-home-btn" onClick={onHome}>
-              Home
+            <button className="primary-btn" onClick={onHome}>
+              Return to Home
             </button>
-          </div>
-        </header>
-
-        <div className="rrcst-card">
-          {selectedClass ? (
-            <div className="rrcst-context">
-              For: <b>{selectedClass.name}</b> — {selectedClass.type} — current room <b>{selectedClass.room}</b>
-            </div>
-          ) : (
-            <div className="rrcst-context">
-              For: <b>—</b>
-            </div>
-          )}
-
-          <div className="rrcst-section">
-            <div className="rrcst-label">Status:</div>
-
-            <div className="rrcst-status-list">
-              <div className="rrcst-status-item">
-                <span className="rrcst-check">✓</span>
-                <span>Submitted</span>
-              </div>
-
-              <div className="rrcst-status-item is-muted">
-                <span className="rrcst-bullet">•</span>
-                <span>Reviewed</span>
-              </div>
-
-              <div className="rrcst-status-item is-muted">
-                <span className="rrcst-bullet">•</span>
-                <span>Approved/Rejected</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="rrcst-note">
-            An email has been sent with this link to track the progress of your request.
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

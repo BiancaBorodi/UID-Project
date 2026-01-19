@@ -1,118 +1,116 @@
 import React, { useMemo, useState } from 'react';
-import '../styles/ManageStudentRequestsAdmin.css';
+import '../styles/ManageStudentRequests.css';
 
 function ManageStudentRequestsAdmin({ onHome, onView }) {
   const requests = useMemo(
-    () => [
-      {
-        id: 'r1',
-        student: 'Popescu Andrei',
-        group: 'Group 1',
-        date: '2026-01-10',
-        docRequested: 'Student Certificate',
-        purpose: 'Scholarship file',
-        submittedDocs: ['id_scan.pdf', 'request_form.png'],
-      },
-      {
-        id: 'r2',
-        student: 'Ionescu Maria',
-        group: 'Group 2',
-        date: '2026-01-11',
-        docRequested: 'Diploma Copy',
-        purpose: 'Job application',
-        submittedDocs: ['id_scan.pdf'],
-      },
-      {
-        id: 'r3',
-        student: 'Radu Mihai',
-        group: 'Group 3',
-        date: '2026-01-12',
-        docRequested: 'Enrollment Proof',
-        purpose: 'Dorm administration',
-        submittedDocs: ['doc.pdf', 'doc.png'],
-      },
-      {
-        id: 'r4',
-        student: 'Dumitrescu Ana',
-        group: 'Group 1',
-        date: '2026-01-12',
-        docRequested: 'Transcript Request',
-        purpose: 'Erasmus application',
-        submittedDocs: ['passport.pdf', 'application.png'],
-      },
-      {
-        id: 'r5',
-        student: 'Stan Ioana',
-        group: 'Group 2',
-        date: '2026-01-13',
-        docRequested: 'Student Certificate',
-        purpose: 'Bank account benefits',
-        submittedDocs: ['id_scan.pdf', 'proof.png'],
-      },
-    ],
-    []
+      () => [
+        {
+          id: 'r1',
+          student: 'Popescu Andrei',
+          group: 'Group 1',
+          date: '2026-01-10',
+          docRequested: 'Student Certificate',
+          purpose: 'Scholarship file',
+          submittedDocs: ['id_scan.pdf', 'request_form.png'],
+        },
+        {
+          id: 'r2',
+          student: 'Ionescu Maria',
+          group: 'Group 2',
+          date: '2026-01-11',
+          docRequested: 'Diploma Copy',
+          purpose: 'Job application',
+          submittedDocs: ['id_scan.pdf'],
+        },
+        {
+          id: 'r3',
+          student: 'Radu Mihai',
+          group: 'Group 3',
+          date: '2026-01-12',
+          docRequested: 'Enrollment Proof',
+          purpose: 'Dorm administration',
+          submittedDocs: ['doc.pdf', 'doc.png'],
+        },
+        {
+          id: 'r4',
+          student: 'Dumitrescu Ana',
+          group: 'Group 1',
+          date: '2026-01-12',
+          docRequested: 'Transcript Request',
+          purpose: 'Erasmus application',
+          submittedDocs: ['passport.pdf', 'application.png'],
+        },
+        {
+          id: 'r5',
+          student: 'Stan Ioana',
+          group: 'Group 2',
+          date: '2026-01-13',
+          docRequested: 'Student Certificate',
+          purpose: 'Bank account benefits',
+          submittedDocs: ['id_scan.pdf', 'proof.png'],
+        },
+      ],
+      []
   );
 
-  const [selectedId, setSelectedId] = useState(requests[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(null);
   const selectedRequest = requests.find((r) => r.id === selectedId);
 
   return (
-    <div className="msra-page">
-      <div className="msra-wrapper">
-        <header className="msra-topbar">
-          <div className="msra-title-wrap">
-            <h1 className="msra-title">Manage student requests</h1>
-            <div className="msra-subtitle">Pending requests:</div>
+      <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+        <div className="request-container">
+          {/* --- HEADER --- */}
+          <div className="request-header">
+            <h2>Manage Student Requests</h2>
           </div>
 
-          <button className="msra-home-btn" onClick={onHome}>
-            Home
-          </button>
-        </header>
+          <h4 className="section-title">Pending Requests</h4>
 
-        <div className="msra-card">
-          <div className="msra-table">
-            <div className="msra-row msra-header">
-              <div>Student</div>
-              <div>Group</div>
-              <div>Date</div>
-              <div>Doc. requested</div>
-            </div>
-
+          {/* --- TABLE --- */}
+          <table className="request-table">
+            <thead>
+            <tr>
+              <th>Student</th>
+              <th>Group</th>
+              <th>Date</th>
+              <th>Document</th>
+            </tr>
+            </thead>
+            <tbody>
             {requests.map((r) => {
-              const active = r.id === selectedId;
+              const isSelected = r.id === selectedId;
               return (
-                <button
-                  key={r.id}
-                  type="button"
-                  className={`msra-row msra-item ${active ? 'is-active' : ''}`}
-                  onClick={() => setSelectedId(r.id)}
-                >
-                  <div>{r.student}</div>
-                  <div>{r.group}</div>
-                  <div>{r.date}</div>
-                  <div>{r.docRequested}</div>
-                </button>
+                  <tr
+                      key={r.id}
+                      className={`clickable-row ${isSelected ? 'selected' : ''}`}
+                      onClick={() => setSelectedId(r.id)}
+                  >
+                    <td style={{fontWeight: 'bold'}}>{r.student}</td>
+                    <td>{r.group}</td>
+                    <td>{r.date}</td>
+                    <td>{r.docRequested}</td>
+                  </tr>
               );
             })}
-          </div>
+            </tbody>
+          </table>
 
-          <div className="msra-actions">
-            <div className="msra-hint">
-              Selected: <b>{selectedRequest ? selectedRequest.student : '—'}</b>
-            </div>
+          {/* --- NAVIGATION --- */}
+          <div className="nav-buttons">
+            <button className="secondary-btn" onClick={onHome}>
+              Cancel
+            </button>
 
             <button
-              className="msra-primary-btn"
-              onClick={() => selectedRequest && onView(selectedRequest)}
-              disabled={!selectedRequest}
+                className="primary-btn"
+                onClick={() => selectedRequest && onView(selectedRequest)}
+                disabled={!selectedRequest}
             >
-              View
+              Process Request
             </button>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

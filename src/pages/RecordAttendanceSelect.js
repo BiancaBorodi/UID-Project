@@ -1,19 +1,19 @@
 import React, { useMemo, useState } from 'react';
-import '../styles/RecordAttendanceSelect.css';
+import '../styles/RecordAttendance.css';
 
 function RecordAttendanceSelect({ onHome, onConfirm }) {
   const classes = useMemo(
-    () => [
-      { id: 'uid-lect-cal-en', name: 'UID', type: 'Lecture', seriesGroup: 'Cal EN', nrStudents: 30444 },
-      { id: 'hci-seminar-gr1', name: 'HCI', type: 'Seminar', seriesGroup: 'Group 1', nrStudents: 28 },
-      { id: 'db-lab-gr2', name: 'Databases', type: 'Lab', seriesGroup: 'Group 2', nrStudents: 22 },
-      { id: 'os-lect-cal-ro', name: 'Operating Systems', type: 'Lecture', seriesGroup: 'Cal RO', nrStudents: 240 },
-      { id: 'net-lab-gr3', name: 'Computer Networks', type: 'Lab', seriesGroup: 'Group 3', nrStudents: 24 },
-    ],
-    []
+      () => [
+        { id: 'uid-lect-cal-en', name: 'UID', type: 'Lecture', seriesGroup: 'Cal EN', nrStudents: 225 },
+        { id: 'hci-seminar-gr1', name: 'HCI', type: 'Seminar', seriesGroup: 'Group 1', nrStudents: 28 },
+        { id: 'db-lab-gr2', name: 'Databases', type: 'Lab', seriesGroup: 'Group 2', nrStudents: 22 },
+        { id: 'os-lect-cal-ro', name: 'Operating Systems', type: 'Lecture', seriesGroup: 'Cal RO', nrStudents: 240 },
+        { id: 'net-lab-gr3', name: 'Comp. Networks', type: 'Lab', seriesGroup: 'Group 3', nrStudents: 24 },
+      ],
+      []
   );
 
-  const [selectedId, setSelectedId] = useState(classes[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(null);
 
   const selectedClass = classes.find((c) => c.id === selectedId);
 
@@ -23,57 +23,60 @@ function RecordAttendanceSelect({ onHome, onConfirm }) {
   };
 
   return (
-    <div className="ra-page">
-      <div className="ra-wrapper">
-        <header className="ra-topbar">
-          <div className="ra-title-wrap">
-            <h1 className="ra-title">Record Attendance</h1>
-            <div className="ra-subtitle">Select held class:</div>
+      <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+        <div className="attendance-container">
+          {/* --- HEADER --- */}
+          <div className="attendance-header">
+            <h2>Record Attendance</h2>
           </div>
 
-          <button className="ra-home-btn" onClick={onHome}>
-            Home
-          </button>
-        </header>
+          <h4 className="section-title">1. Select Held Class</h4>
 
-        <div className="ra-card">
-          <div className="ra-table">
-            <div className="ra-row ra-header">
-              <div>Name</div>
-              <div>Type</div>
-              <div>Series/Group</div>
-              <div className="ra-right">Nr students</div>
-            </div>
-
+          {/* --- TABLE --- */}
+          <table className="attendance-table">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Group</th>
+              <th>Students</th>
+            </tr>
+            </thead>
+            <tbody>
             {classes.map((cls) => {
-              const active = cls.id === selectedId;
+              const isSelected = cls.id === selectedId;
               return (
-                <button
-                  key={cls.id}
-                  type="button"
-                  className={`ra-row ra-item ${active ? 'is-active' : ''}`}
-                  onClick={() => setSelectedId(cls.id)}
-                >
-                  <div>{cls.name}</div>
-                  <div>{cls.type}</div>
-                  <div>{cls.seriesGroup}</div>
-                  <div className="ra-right">{cls.nrStudents}</div>
-                </button>
+                  <tr
+                      key={cls.id}
+                      className={`clickable-row ${isSelected ? 'selected' : ''}`}
+                      onClick={() => setSelectedId(cls.id)}
+                  >
+                    <td style={{fontWeight: 'bold'}}>{cls.name}</td>
+                    <td>{cls.type}</td>
+                    <td>{cls.seriesGroup}</td>
+                    <td>{cls.nrStudents}</td>
+                  </tr>
               );
             })}
-          </div>
+            </tbody>
+          </table>
 
-          <div className="ra-actions">
-            <div className="ra-hint">
-              Selected: <b>{selectedClass ? `${selectedClass.name} (${selectedClass.type})` : '—'}</b>
-            </div>
-            <button className="ra-primary-btn" onClick={handleConfirm} disabled={!selectedClass}>
-              Confirm
+          {/* --- NAVIGATION --- */}
+          <div className="nav-buttons">
+            <button className="secondary-btn" onClick={onHome}>
+              Cancel
+            </button>
+
+            <button
+                className="primary-btn"
+                onClick={handleConfirm}
+                disabled={!selectedClass}
+            >
+              Next
             </button>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

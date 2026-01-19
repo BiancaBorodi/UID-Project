@@ -109,9 +109,7 @@ function ExamEnrollment({ onBack }) {
 
         return (
             <div>
-                <button className="action-btn" onClick={() => setSelectedCourseId(null)} style={{marginBottom:'15px'}}>
-                    ← Back to Courses
-                </button>
+                {/* REMOVED: The top "Back to Courses" button to match PlanStudy layout */}
 
                 <h3>Select Session for: <span style={{color:'var(--primary-red)'}}>{course.name}</span></h3>
 
@@ -163,9 +161,24 @@ function ExamEnrollment({ onBack }) {
 
                 {selectedCourseId ? renderSessionList() : renderCourseList()}
 
-                <div style={{marginTop: '20px', textAlign: 'right'}}>
-                    <button className="action-btn" onClick={onBack}>Home</button>
+                {/* --- NEW NAVIGATION BAR (Matches PlanStudy) --- */}
+                <div className="nav-buttons">
+                    {selectedCourseId ? (
+                        // If inside a course (Level 2), Back button goes to Course List
+                        <button className="secondary-btn" onClick={() => setSelectedCourseId(null)}>
+                            Back
+                        </button>
+                    ) : (
+                        // If at top level (Level 1), Back button goes Home (onBack prop)
+                        <button className="secondary-btn" onClick={onBack}>
+                            Cancel
+                        </button>
+                    )}
+
+                    {/* Note: There is no global "Next" button here because the action
+                        is taken inside the table rows ('Choose' or 'Enroll') */}
                 </div>
+                {/* ----------------------------------------------- */}
 
                 {showModal && (
                     <div className="modal-overlay">
@@ -178,8 +191,8 @@ function ExamEnrollment({ onBack }) {
                                 Room {pendingSession?.room}
                             </p>
                             <div className="modal-actions">
-                                <button className="action-btn" onClick={() => setShowModal(false)}>Cancel</button>
-                                <button className="action-btn" style={{background:'var(--primary-red)', color:'white', borderColor:'var(--primary-red)'}} onClick={confirmEnrollment}>Confirm</button>
+                                <button className="secondary-btn" onClick={() => setShowModal(false)}>Cancel</button>
+                                <button className="primary-btn" onClick={confirmEnrollment}>Confirm</button>
                             </div>
                         </div>
                     </div>

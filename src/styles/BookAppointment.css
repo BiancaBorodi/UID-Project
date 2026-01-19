@@ -1,0 +1,159 @@
+/* Container consistent with other pages */
+.appointment-container {
+    width: 100%;
+    max-width: 700px; /* Slightly wider to fit the calendar grid nicely */
+    margin: auto;
+    background-color: var(--card-bg);
+    border: 2px solid var(--text-main);
+    padding: 2.5rem;
+}
+
+/* Header style */
+.appointment-header {
+    border-bottom: 2px solid var(--text-main);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.appointment-header h2 {
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+
+.section-title {
+    margin-bottom: 10px;
+    color: var(--text-main);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* --- DATE PICKER GRID --- */
+.calendar-grid {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto; /* Allows scrolling if screen is small */
+    padding-bottom: 10px; /* Space for scrollbar */
+}
+
+.date-card {
+    min-width: 70px;
+    height: 80px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s;
+}
+
+.date-card:hover {
+    border-color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+.date-card.selected {
+    background-color: var(--text-main);
+    border-color: var(--text-main);
+    color: white;
+}
+
+.day-name {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.day-num {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* --- TIME SLOT GRID --- */
+.time-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.time-chip {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+.time-chip:hover:not(:disabled) {
+    border-color: var(--text-main);
+    background-color: #f0f0f0;
+}
+
+.time-chip.selected {
+    background-color: var(--primary-red); /* Using the global red theme */
+    color: white;
+    border-color: var(--primary-red);
+}
+
+.time-chip:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background-color: #eee;
+    text-decoration: line-through;
+}
+
+/* Animation for smoother UI */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- NAVIGATION BUTTONS (Scoped) --- */
+.appointment-container .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.appointment-container .primary-btn,
+.appointment-container .secondary-btn {
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid var(--text-main);
+}
+
+.appointment-container .primary-btn {
+    background-color: var(--primary-red);
+    color: white;
+}
+
+.appointment-container .primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #ccc;
+    border-color: #ccc;
+}
+
+.appointment-container .secondary-btn {
+    background-color: white;
+    color: var(--text-main);
+}
+
+.appointment-container .secondary-btn:hover {
+    background-color: var(--text-main);
+    color: white;
+}

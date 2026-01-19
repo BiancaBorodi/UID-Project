@@ -1,0 +1,172 @@
+/* Container consistent with UID Design System */
+.room-container {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    background-color: var(--card-bg);
+    border: 2px solid var(--text-main);
+    padding: 2.5rem;
+}
+
+/* Header style */
+.room-header {
+    border-bottom: 2px solid var(--text-main);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.room-header h2 {
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+
+.section-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-main);
+    text-transform: uppercase;
+    font-size: 0.95rem;
+}
+
+/* Table Styling */
+.room-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.room-table th, .room-table td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+.room-table th {
+    background-color: var(--text-main);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Interactive Rows */
+.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.clickable-row:hover {
+    background-color: #f0f0f0;
+}
+
+.clickable-row.selected {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.clickable-row.selected td {
+    border-color: #c3e6cb;
+}
+
+/* Context Box */
+.context-box {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-left: 5px solid var(--text-main);
+    margin-bottom: 25px;
+}
+
+/* Timeline Styles (Status) */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    opacity: 0.5; /* Dimmed by default */
+}
+
+.timeline-item.active {
+    opacity: 1; /* Highlight active step */
+}
+
+.timeline-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.timeline-item.active .timeline-icon {
+    background-color: var(--success-green); /* Or var(--text-main) */
+}
+
+.timeline-content strong {
+    display: block;
+    color: var(--text-main);
+}
+
+.timeline-content p {
+    margin: 2px 0 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.info-note {
+    background-color: #e3f2fd;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #0d47a1;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Navigation Buttons (Scoped) */
+.room-container .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.room-container .primary-btn,
+.room-container .secondary-btn {
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid var(--text-main);
+}
+
+.room-container .primary-btn {
+    background-color: var(--primary-red);
+    color: white;
+}
+
+.room-container .primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #ccc;
+    border-color: #ccc;
+}
+
+.room-container .secondary-btn {
+    background-color: white;
+    color: var(--text-main);
+}
+
+.room-container .secondary-btn:hover {
+    background-color: var(--text-main);
+    color: white;
+}

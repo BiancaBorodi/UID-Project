@@ -1,24 +1,25 @@
 import React, { useMemo, useState } from 'react';
-import '../styles/RecordAttendanceList.css';
+import '../styles/RecordAttendance.css';
 
 function RecordAttendanceList({ selectedClass, onHome, onSubmit, onBack }) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const students = useMemo(
-    () => [
-      { id: 's1', name: 'Popescu Andrei', group: 'Group 1' },
-      { id: 's2', name: 'Ionescu Maria', group: 'Group 1' },
-      { id: 's3', name: 'Radu Mihai', group: 'Group 2' },
-      { id: 's4', name: 'Dumitrescu Ana', group: 'Group 2' },
-      { id: 's5', name: 'Stan Ioana', group: 'Group 3' },
-      { id: 's6', name: 'Marin Vlad', group: 'Group 3' },
-    ],
-    []
+      () => [
+        { id: 's1', name: 'Popescu Andrei', group: 'Group 1' },
+        { id: 's2', name: 'Ionescu Maria', group: 'Group 1' },
+        { id: 's3', name: 'Radu Mihai', group: 'Group 2' },
+        { id: 's4', name: 'Dumitrescu Ana', group: 'Group 2' },
+        { id: 's5', name: 'Stan Ioana', group: 'Group 3' },
+        { id: 's6', name: 'Marin Vlad', group: 'Group 3' },
+      ],
+      []
   );
 
-  // default a few checked just to look like the mock
   const [present, setPresent] = useState(() => {
     const initial = {};
     students.forEach((s, idx) => {
-      initial[s.id] = idx % 2 === 0; // alternating true/false
+      initial[s.id] = idx % 2 === 0;
     });
     return initial;
   });
@@ -28,76 +29,122 @@ function RecordAttendanceList({ selectedClass, onHome, onSubmit, onBack }) {
   };
 
   const handleSubmit = () => {
+    // 1. Immediately show the success screen
+    setIsSubmitted(true);
+
+    // NOTE: We calculated 'presentIds' here before, but since we aren't sending
+    // it to a real backend right now, I removed it to stop the warning.
+
+    // If you need to debug the data, you can uncomment this:
+    /*
     const presentIds = Object.entries(present)
       .filter(([, isPresent]) => isPresent)
       .map(([id]) => id);
+    console.log("Submitting:", presentIds);
+    */
 
-    onSubmit({ selectedClass, presentIds });
+    if (onSubmit) {
+      // onSubmit({ selectedClass, presentIds });
+    }
   };
 
-  return (
-    <div className="ral-page">
-      <div className="ral-wrapper">
-        <header className="ral-topbar">
-          <div className="ral-title-wrap">
-            <h1 className="ral-title">Record Attendance</h1>
-            <div className="ral-subtitle">Student List</div>
-            {selectedClass ? (
-              <div className="ral-context">
-                Class: <b>{selectedClass.name}</b> — {selectedClass.type} — {selectedClass.seriesGroup}
-              </div>
-            ) : (
-              <div className="ral-context">
-                Class: <b>—</b>
-              </div>
-            )}
-          </div>
-
-          <div className="ral-top-actions">
-            <button className="ral-secondary-btn" onClick={onBack}>
-              Back
-            </button>
-            <button className="ral-home-btn" onClick={onHome}>
-              Home
-            </button>
-          </div>
-        </header>
-
-        <div className="ral-card">
-          <div className="ral-table">
-            <div className="ral-row ral-header">
-              <div>Name</div>
-              <div>Group</div>
-              <div className="ral-center">Attendance</div>
+  // --- SUCCESS VIEW ---
+  if (isSubmitted) {
+    return (
+        <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+          <div className="attendance-container" style={{ textAlign: 'center' }}>
+            <div className="attendance-header">
+              <h2>Attendance Saved</h2>
             </div>
 
-            {students.map((s) => (
-              <div key={s.id} className="ral-row ral-item">
-                <div>{s.name}</div>
-                <div>{s.group}</div>
+            <div className="success-message">
+              <div style={{ fontSize: '4rem', color: 'green', marginBottom: '10px' }}>✓</div>
+              <h3 style={{ color: 'var(--text-main)', marginTop: '5px' }}>
+                Submission Successful
+              </h3>
+              <p style={{ marginTop: '20px', color: '#666' }}>
+                You have successfully recorded attendance for:
+              </p>
+              <h4 style={{ color: 'var(--text-main)', margin: '10px 0' }}>
+                {selectedClass ? selectedClass.name : 'Class'}
+              </h4>
+              <p style={{ fontSize: '0.9rem', color: '#666' }}>
+                Count: <strong>{Object.values(present).filter(Boolean).length}</strong> present / {students.length} total
+              </p>
+            </div>
 
-                <div className="ral-center">
-                  <label className="ral-check">
-                    <input
-                      type="checkbox"
-                      checked={!!present[s.id]}
-                      onChange={() => toggle(s.id)}
-                    />
-                    <span className="ral-check-ui" />
-                  </label>
-                </div>
-              </div>
-            ))}
+            <div className="nav-buttons" style={{ justifyContent: 'center' }}>
+              <button className="primary-btn" onClick={onHome}>Return to Dashboard</button>
+            </div>
+          </div>
+        </div>
+    );
+  }
+
+  // --- MAIN LIST VIEW ---
+  return (
+      <div style={{ padding: '40px 20px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+        <div className="attendance-container">
+          {/* --- HEADER --- */}
+          <div className="attendance-header">
+            <h2>Record Attendance</h2>
           </div>
 
-          <div className="ral-actions">
-            <button className="ral-primary-btn" onClick={handleSubmit}>
-              Submit
+          {/* --- CONTEXT INFO --- */}
+          <div className="context-box">
+            <h4 style={{margin:0, color: 'var(--text-main)'}}>
+              {selectedClass ? `${selectedClass.name} (${selectedClass.type})` : 'Class'}
+            </h4>
+            <p style={{margin:0, fontSize:'0.9rem', color:'#666'}}>
+              {selectedClass?.seriesGroup}
+            </p>
+          </div>
+
+          <h4 className="section-title">2. Mark Present Students</h4>
+
+          {/* --- LIST TABLE --- */}
+          <table className="attendance-table">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Group</th>
+              <th style={{width: '80px', textAlign: 'center'}}>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {students.map((s) => {
+              const isPresent = !!present[s.id];
+              return (
+                  <tr
+                      key={s.id}
+                      className={`clickable-row ${isPresent ? 'selected' : ''}`}
+                      onClick={() => toggle(s.id)}
+                  >
+                    <td>{s.name}</td>
+                    <td>{s.group}</td>
+                    <td style={{textAlign:'center'}}>
+                      <div className={`checkbox-custom ${isPresent ? 'checked' : ''}`}>
+                        {isPresent && '✓'}
+                      </div>
+                    </td>
+                  </tr>
+              );
+            })}
+            </tbody>
+          </table>
+
+          {/* --- NAVIGATION --- */}
+          <div className="nav-buttons">
+            <button className="secondary-btn" onClick={onBack}>
+              Back
+            </button>
+
+            <button className="primary-btn" onClick={handleSubmit}>
+              Submit List
             </button>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

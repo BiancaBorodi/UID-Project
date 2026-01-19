@@ -1,0 +1,146 @@
+/* Container matching PlanStudy and others */
+.tuition-container {
+    width: 100%;
+    max-width: 600px; /* Slightly narrower for a payment form looks better */
+    margin: auto;
+    background-color: var(--card-bg);
+    border: 2px solid var(--text-main);
+    padding: 2.5rem;
+}
+
+/* Header matching styles */
+.tuition-header {
+    border-bottom: 2px solid var(--text-main);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.tuition-header h2 {
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+
+/* Status Banner */
+.status-banner {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid transparent;
+    margin-bottom: 25px;
+    border-left-width: 5px;
+}
+
+.status-banner.overdue {
+    background-color: #fff5f5;
+    border-color: #f5c6cb;
+    border-left-color: var(--error-red); /* Uses global red if available, or #dc3545 */
+    color: #721c24;
+}
+
+.status-banner.paid {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    border-left-color: var(--success-green);
+    color: #155724;
+}
+
+.status-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+/* Invoice Box Styles */
+.invoice-box {
+    border: 2px solid #eee;
+    padding: 20px;
+    background: #f9f9f9;
+    margin-bottom: 25px;
+}
+
+.invoice-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 1rem;
+}
+
+.amount {
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.1rem;
+}
+
+.invoice-row.penalty {
+    color: var(--primary-red);
+}
+
+.divider {
+    border: 0;
+    border-top: 2px dashed #ccc;
+    margin: 15px 0;
+}
+
+.invoice-row.total {
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin-top: 5px;
+}
+
+.total-text {
+    font-size: 1.4rem;
+}
+
+/* Action Area */
+.action-area {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.pay-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+.success-receipt {
+    padding: 15px;
+    background: #e9ecef;
+    border: 2px solid #dee2e6;
+    color: var(--text-main);
+    font-weight: bold;
+}
+
+/* Navigation Buttons (Global consistency) */
+.tuition-container .nav-buttons {
+    display: flex;
+    justify-content: flex-start; /* Aligns Home to the left */
+    margin-top: 20px;
+}
+
+.tuition-container .primary-btn, .secondary-btn {
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid var(--text-main);
+}
+
+.primary-btn {
+    background-color: var(--primary-red);
+    color: white;
+}
+
+.primary-btn:hover {
+    opacity: 0.9;
+}
+
+.secondary-btn {
+    background-color: white;
+    color: var(--text-main);
+}
+
+.tuition-container .secondary-btn:hover {
+    background-color: var(--text-main);
+    color: white;
+}
